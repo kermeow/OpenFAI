@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://oystl46kfu4"]
+[gd_scene load_steps=3 format=3 uid="uid://oystl46kfu4"]
 
 [ext_resource type="Script" path="res://scripts/gameplay/GameScene.gd" id="1_tn7qb"]
+[ext_resource type="PackedScene" uid="uid://bgyrdano8skgl" path="res://prefabs/gameplay/Player.tscn" id="3_yy24x"]
 
 [node name="GameScene" type="Node2D"]
 script = ExtResource("1_tn7qb")
@@ -10,5 +11,10 @@ ignore_rotation = false
 position_smoothing_enabled = true
 
 [node name="Floors" type="CanvasGroup" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("3_yy24x")]
+camera_path = NodePath("../Camera")
+music_path = NodePath("../Music")
+floor_container_path = NodePath("../Floors")
 
 [node name="Music" type="AudioStreamPlayer" parent="."]

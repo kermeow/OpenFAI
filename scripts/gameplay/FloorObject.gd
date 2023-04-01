@@ -18,6 +18,7 @@ var length = 50:
 		length = value
 		realign()
 
+var next_floor:FloorObject
 var previous_floor:FloorObject
 
 @onready var line:Line2D = $Line

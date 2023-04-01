@@ -14,5 +14,7 @@ func setup():
 		var object:FloorObject = preload("res://prefabs/gameplay/Floor.tscn").instantiate()
 		object.floor = floor
 		object.previous_floor = last_floor
+		if last_floor != null: last_floor.next_floor = object
 		$Floors.add_child(object)
 		last_floor = object
+	$Player.current_floor = $Floors.get_child(0)

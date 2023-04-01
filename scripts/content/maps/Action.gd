@@ -1,19 +1,19 @@
 extends Object
 class_name Action
 
-enum ActionType {
+enum Type {
 	Unknown,
 	SetSpeed,
 	Twirl,
 	PositionTrack
 }
 
-var type:ActionType
+var type:Type
 var data:Dictionary
 
 func _init(_data:Dictionary):
 	data = _data
-	type = ActionType.get(data.eventType)
+	type = Type.get(data.eventType,Type.Unknown)
 
 func _get(property):
 	if property in get_property_list():
