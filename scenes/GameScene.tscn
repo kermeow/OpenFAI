@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://oystl46kfu4"]
+
+[ext_resource type="PackedScene" uid="uid://b7awk3wcq8lgc" path="res://prefabs/gameplay/Floor.tscn" id="1_k86vg"]
+
+[node name="GameScene" type="Node2D"]
+
+[node name="Camera" type="Camera2D" parent="."]
+
+[node name="Floor" parent="." instance=ExtResource("1_k86vg")]

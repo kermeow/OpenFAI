@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7awk3wcq8lgc"]
+
+[ext_resource type="Script" path="res://scripts/gameplay/Floor.gd" id="1_eofuy"]
+
+[sub_resource type="Gradient" id="Gradient_r6qur"]
+
+[node name="Floor" type="Node2D"]
+script = ExtResource("1_eofuy")
+angle = 30
+length = 50
+
+[node name="Line" type="Line2D" parent="."]
+points = PackedVector2Array(-64, 0, 0, 0, 0, -64)
+width = 50.0
+gradient = SubResource("Gradient_r6qur")
