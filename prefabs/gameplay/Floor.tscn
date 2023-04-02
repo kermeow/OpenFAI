@@ -20,6 +20,7 @@ width = 50.0
 gradient = SubResource("Gradient_r6qur")
 texture = ExtResource("2_eufy2")
 texture_mode = 2
+joint_mode = 2
 
 [node name="Actions" type="Node2D" parent="."]
 

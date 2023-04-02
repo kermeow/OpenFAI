@@ -14,17 +14,37 @@ func _ready():
 func setup():
 	get_tree().paused = true
 	$Music.stream = map.audio
-	var last_floor
+
+	var objects = []
+	var align_object:FloorObject
+	var last_object:FloorObject
 	for floor in map.floors:
 		var object:FloorObject = preload("res://prefabs/gameplay/Floor.tscn").instantiate()
+
+		object.actions = []
+
 		object.floor = floor
-		object.previous_floor = last_floor
-		if last_floor != null: last_floor.next_floor = object
+		if align_object: object.align_to_floor(align_object)
+		if !floor.midspin and !floor.no_align: align_object = object
+
+		if last_object != null:
+			last_object.next_floor = object
+		last_object = object
+
+		objects.append(object)
+		if floor.midspin: objects.append(object)
 		$Floors.add_child(object)
-		last_floor = object
+	for action in map.actions:
+		if action.floor < objects.size():
+			var object = objects[action.floor]
+			object.actions.append(action)
+			object.update_actions()
+		else:
+			print("Out of bounds action")
+
 	$Player.bpm = map.settings.get("bpm",60)
 	$Player.current_floor = $Floors.get_child(0)
-	$Player.run_actions($Player.current_floor.floor)
+	$Player.run_actions($Player.current_floor)
 	get_tree().paused = false
 
 var counting = false

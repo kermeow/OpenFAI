@@ -43,10 +43,9 @@ func _process(delta:float):
 func _input(event):
 	if !game.playing: return
 	if event is InputEventKey and event.pressed and !event.is_echo():
-		try_hit()
+		hit()
 
 func movement():
-	position = current_floor.position
 	anchor.position = Vector2()
 	spinner.position = Vector2(
 		cos(deg_to_rad(angle)),
@@ -54,29 +53,21 @@ func movement():
 	) * 100
 
 func flip():
-	spins = 0
 	side = not side
 	angle = wrapf(angle-180,-180,180)
-
-func try_hit():
-	var next_floor = current_floor.next_floor
-	if next_floor != null:
-		var difference = rad_to_deg(spinner.position.angle_to(next_floor.position-position))
-		var abs_difference = abs(difference)
-		if abs_difference <= 30:
-			print("Perfect")
-		elif abs_difference <= 45:
-			print("Good")
-		elif abs_difference <= 60:
-			print("Poor")
-		if abs_difference > 60: return
-		flip()
-		current_floor = next_floor
+func advance(floor:FloorObject,_flip:bool=true):
+	run_actions(floor)
+	current_floor = floor
+	if _flip:
+		position = current_floor.position
 		spin_angle = 0
-		run_actions(current_floor.floor)
+		flip()
+func hit():
+	if current_floor != null:
+		current_floor.hit(self)
 
-func run_actions(floor:Floor):
-	for action in floor.actions:
+func run_actions(object:FloorObject):
+	for action in object.actions:
 		match action.type:
 			Action.Type.Twirl:
 				clockwise = not clockwise

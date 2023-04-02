@@ -16,7 +16,7 @@ func _init(_data:Dictionary):
 	type = Type.get(data.eventType,Type.Unknown)
 
 func _get(property):
-	if property in get_property_list():
+	if property in get_property_list().map(func(property): return property.name):
 		return null
 	if property in data.keys():
 		return data.get(property)
