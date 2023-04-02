@@ -86,3 +86,5 @@ func run_actions(floor:Floor):
 				var _speed = action.data.get("bpmMultiplier",1)
 				if speed_type == "Multiplier":
 					speed *= _speed
+				elif speed_type == "Bpm":
+					bpm = _bpm
