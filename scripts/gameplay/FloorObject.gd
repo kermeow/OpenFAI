@@ -6,6 +6,7 @@ var floor:Floor:
 		floor = value
 		angle = value.angle
 		length = value.length
+		update_actions()
 
 var angle = 0:
 	get: return angle
@@ -31,6 +32,10 @@ func _ready():
 		else:
 			align_to_floor(previous_floor)
 	realign()
+
+func update_actions():
+	var types = floor.actions.map(func(action): return action.type)
+	$Actions/Twirl.visible = Action.Type.Twirl in types
 
 func realign():
 	if line == null: return

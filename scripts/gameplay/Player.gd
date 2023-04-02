@@ -13,10 +13,13 @@ var current_floor:FloorObject
 var angle:float = 0
 var side:bool = false
 var clockwise:bool = true
+var bpm:float = 60
+var speed:float = 1
 
 func _process(delta:float):
-	if clockwise: angle -= delta*180
-	else: angle += delta*180
+	var addition = delta * 180 * (bpm/60) * speed
+	if clockwise: angle -= addition
+	else: angle += addition
 	movement()
 	camera.position = global_position
 
@@ -44,8 +47,14 @@ func flip():
 func try_hit():
 	if current_floor.next_floor != null:
 		flip()
+		current_floor = current_floor.next_floor
 		for action in current_floor.floor.actions:
 			match action.type:
 				Action.Type.Twirl:
 					clockwise = not clockwise
-		current_floor = current_floor.next_floor
+				Action.Type.SetSpeed:
+					var speed_type = action.data.get("speedType","Multiplier")
+					var _bpm = action.data.get("beatsPerMinute",100)
+					var _speed = action.data.get("bpmMultiplier",1)
+					if speed_type == "Multiplier":
+						speed *= _speed

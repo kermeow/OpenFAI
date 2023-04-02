@@ -1,10 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://wpcc843r5awc"]
+[gd_scene load_steps=6 format=3 uid="uid://wpcc843r5awc"]
 
 [ext_resource type="Script" path="res://scripts/gameplay/FloorObject.gd" id="1_ioq44"]
+[ext_resource type="Texture2D" uid="uid://dcb4e3sqyx0o6" path="res://assets/images/tile.svg" id="2_eufy2"]
+[ext_resource type="Texture2D" uid="uid://0dgejfnbfntv" path="res://assets/images/actions/twirl.svg" id="2_mlaot"]
 
 [sub_resource type="Gradient" id="Gradient_r6qur"]
 interpolation_mode = 2
 colors = PackedColorArray(0.2, 0.2, 0.2, 1, 0.7, 0.7, 0.7, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_uqthq"]
+size = Vector2(40, 40)
 
 [node name="Floor" type="Node2D"]
 script = ExtResource("1_ioq44")
@@ -13,3 +18,11 @@ script = ExtResource("1_ioq44")
 points = PackedVector2Array(-50, 0, 0, 0, 50, 0)
 width = 50.0
 gradient = SubResource("Gradient_r6qur")
+texture = ExtResource("2_eufy2")
+texture_mode = 2
+
+[node name="Actions" type="Node2D" parent="."]
+
+[node name="Twirl" type="MeshInstance2D" parent="Actions"]
+mesh = SubResource("QuadMesh_uqthq")
+texture = ExtResource("2_mlaot")
