@@ -4,7 +4,7 @@ class_name GameScene
 var map:Map
 
 func _ready():
-	var path:String = FileAccess.open("res://map_path.txt", FileAccess.READ).get_as_text().strip_edges()
+	var path:String = FileAccess.open("user://map_path.txt", FileAccess.READ).get_as_text().strip_edges()
 	map = MapReader.read_from_file(path)
 	setup()
 	call_deferred("countdown")
