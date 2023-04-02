@@ -14,12 +14,13 @@ var angle:float = 0
 var side:bool = false
 var clockwise:bool = true
 var bpm:float = 60
-var speed:float = 1
+var speed:float = 0.25
 
 func _process(delta:float):
 	var addition = delta * 180 * (bpm/60) * speed
 	if clockwise: angle -= addition
 	else: angle += addition
+	angle = wrapf(angle,0,360)
 	movement()
 	camera.position = global_position
 
@@ -45,9 +46,14 @@ func flip():
 	angle -= 180
 
 func try_hit():
-	if current_floor.next_floor != null:
+	var next_floor = current_floor.next_floor
+	if next_floor != null:
+		var spinner:Node2D = $B
+		if side: spinner = $A
+		var difference = rad_to_deg(abs(spinner.position.angle_to(next_floor.position-position)))
+		if difference > 60: return
 		flip()
-		current_floor = current_floor.next_floor
+		current_floor = next_floor
 		for action in current_floor.floor.actions:
 			match action.type:
 				Action.Type.Twirl:

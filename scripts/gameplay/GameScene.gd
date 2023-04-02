@@ -17,4 +17,5 @@ func setup():
 		if last_floor != null: last_floor.next_floor = object
 		$Floors.add_child(object)
 		last_floor = object
+	$Player.bpm = map.settings.get("bpm",60)
 	$Player.current_floor = $Floors.get_child(0)
