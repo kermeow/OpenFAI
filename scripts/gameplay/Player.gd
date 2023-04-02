@@ -50,8 +50,15 @@ func try_hit():
 	if next_floor != null:
 		var spinner:Node2D = $B
 		if side: spinner = $A
-		var difference = rad_to_deg(abs(spinner.position.angle_to(next_floor.position-position)))
-		if difference > 60: return
+		var difference = rad_to_deg(spinner.position.angle_to(next_floor.position-position))
+		var abs_difference = abs(difference)
+		if abs_difference <= 30:
+			print("Perfect")
+		elif abs_difference <= 45:
+			print("Good")
+		elif abs_difference <= 60:
+			print("Poor")
+		if abs_difference > 60: return
 		flip()
 		current_floor = next_floor
 		for action in current_floor.floor.actions:
