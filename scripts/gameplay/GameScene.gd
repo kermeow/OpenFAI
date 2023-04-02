@@ -4,10 +4,12 @@ class_name GameScene
 var map:Map
 
 func _ready():
-	var path:String = FileAccess.open("user://map_path.txt", FileAccess.READ).get_as_text().strip_edges()
-	map = MapReader.read_from_file("user://maps/{apath}".format({
-		"apath": path
-	}))
+	$FileDialog.add_filter(".adofai","ADOFAI Maps")
+	$FileDialog.popup_centered()
+	$FileDialog.file_selected.connect(map_selected)
+
+func map_selected(path:String):
+	map = MapReader.read_from_file(path)
 	setup()
 	call_deferred("countdown")
 
@@ -71,7 +73,6 @@ func _process(delta:float):
 		if count > countdown_ticks - 1 and not playing:
 			start(count-countdown_ticks)
 		if count > ((countdown_ticks/bpm_speed)-offset)*bpm_speed and not $Music.playing:
-			print(((countdown_ticks/bpm_speed)-offset))
 			$Music.play((count-countdown_ticks)/bpm_speed)
 		if playing and $Music.playing:
 			counting = false
