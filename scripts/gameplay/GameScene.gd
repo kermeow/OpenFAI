@@ -4,7 +4,7 @@ class_name GameScene
 var map:Map
 
 func _ready():
-	$FileDialog.add_filter(".adofai","ADOFAI Maps")
+	$FileDialog.add_filter("*.adofai","ADOFAI Maps")
 	$FileDialog.popup_centered()
 	$FileDialog.file_selected.connect(map_selected)
 

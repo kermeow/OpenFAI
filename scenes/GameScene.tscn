@@ -29,4 +29,3 @@ ok_button_text = "Open"
 mode_overrides_title = false
 file_mode = 0
 access = 1
-filters = PackedStringArray("*.adofai")
