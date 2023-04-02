@@ -18,8 +18,10 @@ var length:int = 50:
 	set(value):
 		length = value
 		realign()
+
 var midspin:bool:
 	get: return floor.midspin
+var midspin_object:FloorObject
 
 var aligned_to:FloorObject
 var next_floor:FloorObject
@@ -37,18 +39,19 @@ func update_actions():
 
 func realign():
 	if line == null: return
-	if midspin:
+	$Line.visible = true
+	$Midspin.visible = false
+	if midspin and midspin_object != null:
 		self.move_to_front()
-		line.set_point_position(2,Vector2(
-			cos(deg_to_rad(angle)),
-			-sin(deg_to_rad(angle))
-			)*length*2)
-	else:
-		line.set_point_position(2,Vector2(
-			cos(deg_to_rad(angle)),
-			-sin(deg_to_rad(angle))
-			)*length)
+	elif midspin:
+		$Line.visible = false
+		$Midspin.visible = true
+	line.set_point_position(2,Vector2(
+		cos(deg_to_rad(angle)),
+		-sin(deg_to_rad(angle))
+		)*length)
 	if aligned_to != null:
+		$Midspin.rotation_degrees = -angle
 		var last_angle = aligned_to.angle
 		position = aligned_to.position + Vector2(
 			cos(deg_to_rad(last_angle)),
@@ -80,4 +83,20 @@ func hit(player:Player):
 	elif abs_difference <= 60:
 		print("Poor")
 	if abs_difference > 60: return
+	if midspin: midspin_object.run_actions(player)
+	next_floor.run_actions(player)
 	player.advance(next_floor,!midspin)
+
+func run_actions(player:Player):
+	for action in actions:
+		match action.type:
+			Action.Type.Twirl:
+				player.clockwise = not player.clockwise
+			Action.Type.SetSpeed:
+				var speed_type = action.data.get("speedType","Multiplier")
+				var _bpm = action.data.get("beatsPerMinute",100)
+				var _speed = action.data.get("bpmMultiplier",1)
+				if speed_type == "Multiplier":
+					player.speed *= _speed
+				elif speed_type == "Bpm":
+					player.bpm = _bpm

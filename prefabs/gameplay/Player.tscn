@@ -7,7 +7,7 @@ radius = 20.0
 height = 40.0
 
 [node name="Player" type="Node2D"]
-z_index = 2
+z_index = 3
 script = ExtResource("1_aim7y")
 
 [node name="A" type="MeshInstance2D" parent="."]

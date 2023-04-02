@@ -4,9 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://dcb4e3sqyx0o6" path="res://assets/images/tile.svg" id="2_eufy2"]
 [ext_resource type="Texture2D" uid="uid://0dgejfnbfntv" path="res://assets/images/actions/twirl.svg" id="2_mlaot"]
 
-[sub_resource type="Gradient" id="Gradient_r6qur"]
+[sub_resource type="Gradient" id="Gradient_mw2w4"]
 interpolation_mode = 2
-colors = PackedColorArray(0.2, 0.2, 0.2, 1, 0.7, 0.7, 0.7, 1)
+colors = PackedColorArray(0.3, 0.3, 0.3, 1, 0.7, 0.7, 0.7, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_uqthq"]
 size = Vector2(40, 40)
@@ -17,12 +17,21 @@ script = ExtResource("1_ioq44")
 [node name="Line" type="Line2D" parent="."]
 points = PackedVector2Array(-50, 0, 0, 0, 50, 0)
 width = 50.0
-gradient = SubResource("Gradient_r6qur")
+gradient = SubResource("Gradient_mw2w4")
 texture = ExtResource("2_eufy2")
 texture_mode = 2
 joint_mode = 2
+antialiased = true
+
+[node name="Midspin" type="Polygon2D" parent="."]
+offset = Vector2(16, 0)
+texture = ExtResource("2_eufy2")
+polygon = PackedVector2Array(10, 0, -16, -25, -40, -25, -40, 25, -16, 25)
+uv = PackedVector2Array(165, 41, 165, 83, 0, 83, 0, 0, 165, 0)
 
 [node name="Actions" type="Node2D" parent="."]
+z_index = 2
+z_as_relative = false
 
 [node name="Twirl" type="MeshInstance2D" parent="Actions"]
 mesh = SubResource("QuadMesh_uqthq")

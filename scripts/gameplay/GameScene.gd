@@ -32,8 +32,14 @@ func setup():
 		last_object = object
 
 		objects.append(object)
-		if floor.midspin: objects.append(object)
 		$Floors.add_child(object)
+		if floor.midspin:
+			var midspin = preload("res://prefabs/gameplay/Floor.tscn").instantiate()
+			midspin.floor = floor
+			midspin.align_to_floor(object)
+			objects.append(midspin)
+			$Floors.add_child(midspin)
+			object.midspin_object = midspin
 	for action in map.actions:
 		if action.floor < objects.size():
 			var object = objects[action.floor]
@@ -44,7 +50,7 @@ func setup():
 
 	$Player.bpm = map.settings.get("bpm",60)
 	$Player.current_floor = $Floors.get_child(0)
-	$Player.run_actions($Player.current_floor)
+	$Player.current_floor.run_actions($Player)
 	get_tree().paused = false
 
 var counting = false

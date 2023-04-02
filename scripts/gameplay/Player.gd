@@ -56,7 +56,6 @@ func flip():
 	side = not side
 	angle = wrapf(angle-180,-180,180)
 func advance(floor:FloorObject,_flip:bool=true):
-	run_actions(floor)
 	current_floor = floor
 	if _flip:
 		position = current_floor.position
@@ -65,17 +64,3 @@ func advance(floor:FloorObject,_flip:bool=true):
 func hit():
 	if current_floor != null:
 		current_floor.hit(self)
-
-func run_actions(object:FloorObject):
-	for action in object.actions:
-		match action.type:
-			Action.Type.Twirl:
-				clockwise = not clockwise
-			Action.Type.SetSpeed:
-				var speed_type = action.data.get("speedType","Multiplier")
-				var _bpm = action.data.get("beatsPerMinute",100)
-				var _speed = action.data.get("bpmMultiplier",1)
-				if speed_type == "Multiplier":
-					speed *= _speed
-				elif speed_type == "Bpm":
-					bpm = _bpm
