@@ -25,7 +25,7 @@ func _process(delta:float):
 	camera.position = global_position
 
 func _input(event):
-	if event is InputEventKey and event.pressed:
+	if event is InputEventKey and event.pressed and !event.is_echo():
 		try_hit()
 
 func movement():
