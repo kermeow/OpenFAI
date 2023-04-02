@@ -4,7 +4,8 @@ class_name GameScene
 var map:Map
 
 func _ready():
-	map = MapReader.read_from_file("user://maps/farewell/level.adofai")
+	var path:String = FileAccess.open("res://map_path.txt", FileAccess.READ).get_as_text()
+	map = MapReader.read_from_file(path)
 	setup()
 
 func setup():

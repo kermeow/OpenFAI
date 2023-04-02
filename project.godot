@@ -16,6 +16,7 @@ config/use_custom_user_dir=true
 config/custom_user_dir_name="OpenFAI"
 config/features=PackedStringArray("4.0", "Forward Plus")
 boot_splash/bg_color=Color(0, 0.027451, 0.0784314, 1)
+boot_splash/show_image=false
 config/icon="res://icon.svg"
 boot_splash/minimum_display_time=50
 
