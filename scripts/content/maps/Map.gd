@@ -29,4 +29,6 @@ func setup():
 
 	for action_data in data.get("actions",[]):
 		var action = Action.new(action_data)
-		floors[int(action_data.get("floor",0))].actions.append(action)
+		var index = int(action_data.get("floor",0))
+		if floors.size() > index:
+			floors[index].actions.append(action)
