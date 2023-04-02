@@ -1,1 +1,1 @@
-user://maps/ig/ig.adofai
+user://maps/mapname/filename.adofai
