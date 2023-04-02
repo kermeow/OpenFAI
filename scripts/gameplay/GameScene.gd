@@ -5,7 +5,9 @@ var map:Map
 
 func _ready():
 	var path:String = FileAccess.open("user://map_path.txt", FileAccess.READ).get_as_text().strip_edges()
-	map = MapReader.read_from_file(path)
+	map = MapReader.read_from_file("user://maps/{apath}".format({
+		"apath": path
+	}))
 	setup()
 	call_deferred("countdown")
 
