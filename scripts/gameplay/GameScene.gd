@@ -65,11 +65,15 @@ func countdown():
 
 func _process(delta:float):
 	if counting:
-		count += delta * ($Player.bpm/60) * $Player.speed
+		var bpm_speed = ($Player.bpm/60) * $Player.speed
+		var offset = map.settings.get("offset",0)/1000.0
+		count += delta * bpm_speed
 		if count > countdown_ticks - 1 and not playing:
 			start(count-countdown_ticks)
-		elif playing and count > countdown_ticks:
-			$Music.play(count-countdown_ticks)
+		if count > ((countdown_ticks/bpm_speed)-offset)*bpm_speed and not $Music.playing:
+			print(((countdown_ticks/bpm_speed)-offset))
+			$Music.play((count-countdown_ticks)/bpm_speed)
+		if playing and $Music.playing:
 			counting = false
 
 var playing:bool = false
