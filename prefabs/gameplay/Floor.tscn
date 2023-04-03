@@ -41,6 +41,7 @@ antialiased = true
 polygon = PackedVector2Array(64, 0, 32, -25, 0, -25, 0, 25, 32, 25)
 
 [node name="Light" type="Sprite2D" parent="."]
+visible = false
 texture = SubResource("GradientTexture2D_vl3ym")
 
 [node name="Actions" type="Node2D" parent="."]
