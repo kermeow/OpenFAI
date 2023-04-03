@@ -71,8 +71,8 @@ func advance(next_floor:FloorObject,offset:float,_flip:bool=true):
 		position = next_floor.position
 		game.set_path_offset()
 		flip()
-		current_floor = next_floor
-		on_advance.emit(next_floor)
+	if next_floor: current_floor = next_floor
+	on_advance.emit(next_floor)
 func hit():
 	if current_floor != null:
 		current_floor.hit(self)
