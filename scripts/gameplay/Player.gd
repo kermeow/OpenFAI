@@ -34,9 +34,9 @@ func _process(delta:float):
 	if clockwise: angle -= addition
 	else: angle += addition
 	spin_angle += addition
-	if game.playing and spin_angle > 270:
-		print("Too slow!")
-		game.stop(true)
+#	if game.playing and spin_angle > 270:
+#		print("Too slow!")
+#		game.stop(true)
 	angle = wrapf(angle,-180,180)
 	anchor = $A
 	spinner = $B
