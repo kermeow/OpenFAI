@@ -1,6 +1,8 @@
 extends Node2D
 class_name Player
 
+signal on_advance
+
 @onready var game:GameScene = get_parent()
 
 @export_node_path("Camera2D") var camera_path
@@ -15,8 +17,11 @@ var current_floor:FloorObject
 var angle:float = 0
 var side:bool = false
 var clockwise:bool = true
+
 var bpm:float = 60
 var speed:float = 1
+var seconds_per_beat:float:
+	get: return (60/bpm)
 
 var anchor:Node2D
 var spinner:Node2D
@@ -58,15 +63,16 @@ func flip():
 	angle = wrapf(angle-180,-180,180)
 func advance(next_floor:FloorObject,offset:float,_flip:bool=true):
 	var difference = current_floor.angle-next_floor.angle
-	var wrapped_difference = wrapf(difference,-180,180)
-	if clockwise: wrapped_difference = -wrapped_difference
-	spin_angle = wrapped_difference + offset
+	var wrapped_difference = wrapf(difference,0,180)
+	if !clockwise: wrapped_difference = -wrapped_difference
+	spin_angle = wrapped_difference
 	print(spin_angle)
 	if _flip:
 		position = next_floor.position
 		game.set_path_offset()
 		flip()
-	current_floor = next_floor
+		current_floor = next_floor
+		on_advance.emit(next_floor)
 func hit():
 	if current_floor != null:
 		current_floor.hit(self)

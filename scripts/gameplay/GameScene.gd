@@ -3,16 +3,17 @@ class_name GameScene
 
 var map:Map
 
-func _ready():
-	$FileDialog.add_filter("*.adofai","ADOFAI Maps")
-	$FileDialog.popup_centered()
-	$FileDialog.file_selected.connect(map_selected)
+var objects:Array[FloorObject]
 
-func map_selected(path:String):
-	map = MapReader.read_from_file(path)
+func _ready():
 	setup()
 	call_deferred("generate_path")
 	call_deferred("countdown")
+
+	$Player.on_advance.connect(player_advanced)
+
+func player_advanced(to:FloorObject):
+	pass
 
 func generate_path():
 	var curve = Curve2D.new()
@@ -25,9 +26,10 @@ func setup():
 	get_tree().paused = true
 	$Music.stream = map.audio
 
-	var objects = []
+	objects = []
 	var align_object:FloorObject
-	var last_object:FloorObject
+	var last_object_noms:FloorObject
+	var midspins:Array[FloorObject] = []
 	for floor in map.floors:
 		var object:FloorObject = preload("res://prefabs/gameplay/Floor.tscn").instantiate()
 
@@ -39,18 +41,25 @@ func setup():
 			floor_position = object.align_to_floor(align_object)
 		if !floor.midspin and !floor.no_align: align_object = object
 
-		if last_object != null:
-			last_object.next_floor = object
-		last_object = object
+		if last_object_noms != null and !floor.midspin:
+			last_object_noms.next_floor = object
+		if !floor.midspin:
+			last_object_noms = object
 
 		objects.append(object)
-		$Floors.add_child(object)
-		if floor.midspin:
+		if !floor.midspin:
+			for midspin in midspins:
+				object.add_child(midspin)
+			object.midspins = midspins
+			midspins = []
+			$Floors.add_child(object)
+		else:
+			midspins.append(object)
 			var midspin = preload("res://prefabs/gameplay/Floor.tscn").instantiate()
 			midspin.floor = floor
 			midspin.align_to_floor(object)
 			objects.append(midspin)
-			$Floors.add_child(midspin)
+			object.add_child(midspin)
 			object.midspin_object = midspin
 	for action in map.actions:
 		if action.floor < objects.size():
