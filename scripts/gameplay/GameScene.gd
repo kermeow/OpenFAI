@@ -48,6 +48,7 @@ func setup():
 
 		objects.append(object)
 		if !floor.midspin:
+			midspins.reverse()
 			for midspin in midspins:
 				object.add_child(midspin)
 			object.midspins = midspins
