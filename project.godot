@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="OpenFAI"
-run/main_scene="res://scenes/GameScene.tscn"
+run/main_scene="res://scenes/Menu.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="OpenFAI"
 config/features=PackedStringArray("4.0", "Forward Plus")
@@ -19,6 +19,11 @@ boot_splash/bg_color=Color(0, 0.027451, 0.0784314, 1)
 boot_splash/show_image=false
 config/icon="res://icon.svg"
 boot_splash/minimum_display_time=50
+run/main_loop_type="ExtendedSceneTree"
+
+[autoload]
+
+Globals="*res://scripts/Globals.gd"
 
 [debug]
 
@@ -26,8 +31,8 @@ file_logging/max_log_files=8
 
 [display]
 
-window/size/viewport_width=1280
-window/size/viewport_height=720
+window/size/viewport_width=800
+window/size/viewport_height=600
 
 [editor]
 

@@ -49,14 +49,3 @@ music_path = NodePath("../Music")
 floor_container_path = NodePath("../Floors")
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
-
-[node name="FileDialog" type="FileDialog" parent="."]
-initial_position = 1
-title = "Select a Map"
-size = Vector2i(800, 600)
-visible = true
-min_size = Vector2i(800, 600)
-ok_button_text = "Open"
-mode_overrides_title = false
-file_mode = 0
-access = 1
