@@ -34,8 +34,27 @@ func _ready():
 	call_deferred("update_actions")
 
 func update_actions():
+	$Actions.rotation_degrees = -angle
 	var types = actions.map(func(action): return action.type)
 	$Actions/Twirl.visible = Action.Type.Twirl in types
+	$Actions/Speed.visible = false
+	$Actions/Speed2.visible = false
+	$Actions/Slow.visible = false
+	$Actions/Slow2.visible = false
+	if Action.Type.SetSpeed in types:
+		var index = types.find(Action.Type.SetSpeed)
+		var action = actions[index]
+		var speed_type = action.data.get("speedType","Multiplier")
+		var _speed = action.data.get("bpmMultiplier",1)
+		if speed_type == "Multiplier":
+			if _speed >= 4:
+				$Actions/Speed2.visible = true
+			elif _speed > 1:
+				$Actions/Speed.visible = true
+			elif _speed <= 0.25:
+				$Actions/Slow2.visible = true
+			elif _speed < 1:
+				$Actions/Slow.visible = true
 
 func realign():
 	if line == null: return
