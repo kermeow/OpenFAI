@@ -32,6 +32,7 @@ rotates = false
 loop = false
 
 [node name="Sprite2D" type="Sprite2D" parent="Path/Follow"]
+visible = false
 position = Vector2(0, -128)
 texture = SubResource("GradientTexture2D_ew7vy")
 
