@@ -121,6 +121,7 @@ func hit(player:Player):
 		print("Poor")
 	if abs_difference > 60: return
 	if midspin:
+		midspin_object.hide_animated(player)
 		next_floor = midspin_object
 	next_floor.run_actions(player)
 	passed = true

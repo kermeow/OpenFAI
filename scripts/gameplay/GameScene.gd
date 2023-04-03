@@ -4,6 +4,7 @@ class_name GameScene
 var map:Map
 
 var objects:Array[FloorObject]
+var objects_noms:Array[FloorObject]
 
 func _ready():
 	setup()
@@ -13,7 +14,19 @@ func _ready():
 	$Player.on_advance.connect(player_advanced)
 
 func player_advanced(to:FloorObject):
-	pass
+	if to == null or to.midspin: return
+	var behind_index = objects_noms.find(to) - map.settings.get("beatsBehind",0)
+	var ahead_index = objects_noms.find(to) + map.settings.get("beatsAhead",4)
+	var index = 0
+	for object in objects_noms.duplicate():
+		if index < behind_index:
+			object.hide_animated($Player)
+			objects_noms.remove_at(objects_noms.find(object))
+		elif index <= ahead_index and !object.visible:
+			object.show_animated($Player)
+		elif index > ahead_index:
+			break
+		index += 1
 
 func generate_path():
 	var curve = Curve2D.new()
@@ -30,8 +43,10 @@ func setup():
 	var align_object:FloorObject
 	var last_object_noms:FloorObject
 	var midspins:Array[FloorObject] = []
+	var object_count:int = 0
 	for floor in map.floors:
 		var object:FloorObject = preload("res://prefabs/gameplay/Floor.tscn").instantiate()
+		objects.append(object)
 
 		object.actions = []
 
@@ -43,10 +58,7 @@ func setup():
 
 		if last_object_noms != null and !floor.midspin:
 			last_object_noms.next_floor = object
-		if !floor.midspin:
-			last_object_noms = object
 
-		objects.append(object)
 		if !floor.midspin:
 			object.midspins = midspins.duplicate()
 			midspins.reverse()
@@ -54,6 +66,11 @@ func setup():
 				object.add_child(midspin)
 			midspins = []
 			$Floors.add_child(object)
+			objects_noms.append(object)
+			object_count += 1
+			last_object_noms = object
+			if object_count > map.settings.get("beatsAhead",4):
+				object.visible = false
 		else:
 			midspins.append(object)
 			var midspin = preload("res://prefabs/gameplay/Floor.tscn").instantiate()

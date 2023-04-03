@@ -44,7 +44,6 @@ func _process(delta:float):
 		anchor = $B
 		spinner = $A
 	movement()
-#	camera.position = global_position
 
 func _input(event):
 	if !game.playing: return
