@@ -1,14 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://bgyrdano8skgl"]
+[gd_scene load_steps=10 format=3 uid="uid://bgyrdano8skgl"]
 
 [ext_resource type="Script" path="res://scripts/gameplay/Player.gd" id="1_aim7y"]
-
-[sub_resource type="Gradient" id="Gradient_b432h"]
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_w7ta8"]
-gradient = SubResource("Gradient_b432h")
-width = 256
-height = 256
 
 [sub_resource type="SphereMesh" id="SphereMesh_bf1ed"]
 radius = 20.0
@@ -63,14 +55,6 @@ light_mask = 2
 visibility_layer = 2
 z_index = 3
 script = ExtResource("1_aim7y")
-
-[node name="Light" type="PointLight2D" parent="."]
-blend_mode = 2
-range_z_min = 3
-range_z_max = 3
-range_item_cull_mask = 2
-texture = SubResource("GradientTexture2D_w7ta8")
-texture_scale = 50.0
 
 [node name="A" type="MeshInstance2D" parent="."]
 self_modulate = Color(0.968627, 0.862745, 0.435294, 1)

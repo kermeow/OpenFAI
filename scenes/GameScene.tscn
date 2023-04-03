@@ -23,9 +23,6 @@ script = ExtResource("1_tn7qb")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_7h0s2")
 
-[node name="Darkness" type="CanvasModulate" parent="WorldEnvironment"]
-color = Color(0.301961, 0.301961, 0.301961, 1)
-
 [node name="Camera" type="Camera2D" parent="."]
 ignore_rotation = false
 position_smoothing_enabled = true

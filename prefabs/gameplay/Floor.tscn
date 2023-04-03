@@ -32,12 +32,14 @@ texture_scale = 2.0
 use_parent_material = true
 points = PackedVector2Array(-50, 0, 0, 0, 50, 0)
 width = 50.0
+default_color = Color(0.6, 0.6, 0.6, 1)
 texture_mode = 2
 joint_mode = 2
 antialiased = true
 
 [node name="Midspin" type="Polygon2D" parent="."]
 use_parent_material = true
+color = Color(0.6, 0.6, 0.6, 1)
 offset = Vector2(-24, 0)
 antialiased = true
 polygon = PackedVector2Array(64, 0, 32, -25, 0, -25, 0, 25, 32, 25)
