@@ -48,10 +48,10 @@ func setup():
 
 		objects.append(object)
 		if !floor.midspin:
+			object.midspins = midspins.duplicate()
 			midspins.reverse()
 			for midspin in midspins:
 				object.add_child(midspin)
-			object.midspins = midspins
 			midspins = []
 			$Floors.add_child(object)
 		else:
