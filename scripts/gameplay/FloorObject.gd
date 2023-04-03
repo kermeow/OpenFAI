@@ -34,7 +34,6 @@ func _ready():
 	call_deferred("update_actions")
 
 func update_actions():
-	$Actions.rotation_degrees = -angle
 	var types = actions.map(func(action): return action.type)
 	$Actions/Twirl.visible = Action.Type.Twirl in types
 	$Actions/Speed.visible = false
@@ -58,6 +57,7 @@ func update_actions():
 
 func realign():
 	if line == null: return
+	$Actions.rotation_degrees = -angle
 	$Line.visible = true
 	$Midspin.visible = false
 	if midspin and midspin_object != null:
