@@ -85,9 +85,10 @@ func hit(player:Player):
 	if abs_difference > 60: return
 	if midspin: midspin_object.run_actions(player)
 	next_floor.run_actions(player)
-	player.advance(next_floor,!midspin)
+	player.advance(next_floor,difference,!midspin)
 
 func run_actions(player:Player):
+	$Light.visible = true
 	for action in actions:
 		match action.type:
 			Action.Type.Twirl:

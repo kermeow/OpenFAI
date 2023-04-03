@@ -55,12 +55,14 @@ func movement():
 func flip():
 	side = not side
 	angle = wrapf(angle-180,-180,180)
-func advance(floor:FloorObject,_flip:bool=true):
-	current_floor = floor
+func advance(next_floor:FloorObject,offset:float,_flip:bool=true):
+	var difference = current_floor.angle-next_floor.angle
+	var wrapped_difference = wrapf(difference,-180,180)
+	spin_angle = wrapped_difference + offset
 	if _flip:
-		position = current_floor.position
-		spin_angle = 0
+		position = next_floor.position
 		flip()
+	current_floor = next_floor
 func hit():
 	if current_floor != null:
 		current_floor.hit(self)

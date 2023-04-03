@@ -4,9 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://dcb4e3sqyx0o6" path="res://assets/images/tile.svg" id="2_eufy2"]
 [ext_resource type="Texture2D" uid="uid://0dgejfnbfntv" path="res://assets/images/actions/twirl.svg" id="2_mlaot"]
 
-[sub_resource type="Gradient" id="Gradient_mw2w4"]
-interpolation_mode = 2
-colors = PackedColorArray(0.3, 0.3, 0.3, 1, 0.7, 0.7, 0.7, 1)
+[sub_resource type="Gradient" id="Gradient_irtx6"]
+colors = PackedColorArray(0.5, 0.5, 0.5, 1, 1, 1, 1, 1)
 
 [sub_resource type="QuadMesh" id="QuadMesh_uqthq"]
 size = Vector2(40, 40)
@@ -17,7 +16,7 @@ script = ExtResource("1_76t8h")
 [node name="Line" type="Line2D" parent="."]
 points = PackedVector2Array(-50, 0, 0, 0, 50, 0)
 width = 50.0
-gradient = SubResource("Gradient_mw2w4")
+gradient = SubResource("Gradient_irtx6")
 texture = ExtResource("2_eufy2")
 texture_mode = 2
 joint_mode = 2
