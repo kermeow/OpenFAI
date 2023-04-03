@@ -1,8 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://wpcc843r5awc"]
+[gd_scene load_steps=10 format=3 uid="uid://wpcc843r5awc"]
 
-[ext_resource type="Script" path="res://scripts/gameplay/FloorObject.gd" id="1_76t8h"]
+[ext_resource type="Script" path="res://scripts/gameplay/FloorObject.gd" id="1_qg1p3"]
 [ext_resource type="Texture2D" uid="uid://dcb4e3sqyx0o6" path="res://assets/images/tile.svg" id="2_eufy2"]
 [ext_resource type="Texture2D" uid="uid://0dgejfnbfntv" path="res://assets/images/actions/twirl.svg" id="2_mlaot"]
+[ext_resource type="Texture2D" uid="uid://dmgejmnfh7wsw" path="res://assets/images/actions/speedUpS.png" id="4_a3qq7"]
+[ext_resource type="Texture2D" uid="uid://81llqb27lati" path="res://assets/images/actions/speedUpL.png" id="5_x0dho"]
+[ext_resource type="Texture2D" uid="uid://b8fgsh5r3ep0h" path="res://assets/images/actions/slowDownS.png" id="6_e7yts"]
+[ext_resource type="Texture2D" uid="uid://bnbw21uyy4t3a" path="res://assets/images/actions/slowDownL.png" id="7_d8q7v"]
 
 [sub_resource type="Gradient" id="Gradient_irtx6"]
 colors = PackedColorArray(0.5, 0.5, 0.5, 1, 1, 1, 1, 1)
@@ -11,7 +15,7 @@ colors = PackedColorArray(0.5, 0.5, 0.5, 1, 1, 1, 1, 1)
 size = Vector2(40, 40)
 
 [node name="Floor" type="Node2D"]
-script = ExtResource("1_76t8h")
+script = ExtResource("1_qg1p3")
 
 [node name="Line" type="Line2D" parent="."]
 points = PackedVector2Array(-50, 0, 0, 0, 50, 0)
@@ -35,3 +39,19 @@ z_as_relative = false
 [node name="Twirl" type="MeshInstance2D" parent="Actions"]
 mesh = SubResource("QuadMesh_uqthq")
 texture = ExtResource("2_mlaot")
+
+[node name="Speed" type="MeshInstance2D" parent="Actions"]
+mesh = SubResource("QuadMesh_uqthq")
+texture = ExtResource("4_a3qq7")
+
+[node name="Speed2" type="MeshInstance2D" parent="Actions"]
+mesh = SubResource("QuadMesh_uqthq")
+texture = ExtResource("5_x0dho")
+
+[node name="Slow" type="MeshInstance2D" parent="Actions"]
+mesh = SubResource("QuadMesh_uqthq")
+texture = ExtResource("6_e7yts")
+
+[node name="Slow2" type="MeshInstance2D" parent="Actions"]
+mesh = SubResource("QuadMesh_uqthq")
+texture = ExtResource("7_d8q7v")
