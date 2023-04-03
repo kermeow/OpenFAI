@@ -122,9 +122,8 @@ func hit(player:Player):
 	if abs_difference > 60: return
 	passed = true
 	if midspin:
-		midspin_object.run_actions(player)
-	else:
-		next_floor.run_actions(player)
+		next_floor = midspin_object
+	next_floor.run_actions(player)
 	player.advance(next_floor,difference,!midspin)
 
 func run_actions(player:Player):
