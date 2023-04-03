@@ -1,15 +1,21 @@
 [gd_scene load_steps=10 format=3 uid="uid://wpcc843r5awc"]
 
 [ext_resource type="Script" path="res://scripts/gameplay/FloorObject.gd" id="1_qg1p3"]
-[ext_resource type="Texture2D" uid="uid://dcb4e3sqyx0o6" path="res://assets/images/tile.svg" id="2_eufy2"]
 [ext_resource type="Texture2D" uid="uid://0dgejfnbfntv" path="res://assets/images/actions/twirl.svg" id="2_mlaot"]
 [ext_resource type="Texture2D" uid="uid://dmgejmnfh7wsw" path="res://assets/images/actions/speedUpS.png" id="4_a3qq7"]
 [ext_resource type="Texture2D" uid="uid://81llqb27lati" path="res://assets/images/actions/speedUpL.png" id="5_x0dho"]
 [ext_resource type="Texture2D" uid="uid://b8fgsh5r3ep0h" path="res://assets/images/actions/slowDownS.png" id="6_e7yts"]
 [ext_resource type="Texture2D" uid="uid://bnbw21uyy4t3a" path="res://assets/images/actions/slowDownL.png" id="7_d8q7v"]
 
-[sub_resource type="Gradient" id="Gradient_irtx6"]
-colors = PackedColorArray(0.5, 0.5, 0.5, 1, 1, 1, 1, 1)
+[sub_resource type="Gradient" id="Gradient_l7ugs"]
+interpolation_mode = 2
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vl3ym"]
+gradient = SubResource("Gradient_l7ugs")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.8, 0.2)
 
 [sub_resource type="QuadMesh" id="QuadMesh_uqthq"]
 size = Vector2(40, 40)
@@ -17,20 +23,24 @@ size = Vector2(40, 40)
 [node name="Floor" type="Node2D"]
 script = ExtResource("1_qg1p3")
 
+[node name="Light" type="PointLight2D" parent="."]
+visible = false
+texture = SubResource("GradientTexture2D_vl3ym")
+texture_scale = 2.0
+
 [node name="Line" type="Line2D" parent="."]
+use_parent_material = true
 points = PackedVector2Array(-50, 0, 0, 0, 50, 0)
 width = 50.0
-gradient = SubResource("Gradient_irtx6")
-texture = ExtResource("2_eufy2")
 texture_mode = 2
 joint_mode = 2
 antialiased = true
 
 [node name="Midspin" type="Polygon2D" parent="."]
-offset = Vector2(16, 0)
-texture = ExtResource("2_eufy2")
-polygon = PackedVector2Array(10, 0, -16, -25, -40, -25, -40, 25, -16, 25)
-uv = PackedVector2Array(165, 41, 165, 83, 0, 83, 0, 0, 165, 0)
+use_parent_material = true
+offset = Vector2(-24, 0)
+antialiased = true
+polygon = PackedVector2Array(64, 0, 32, -25, 0, -25, 0, 25, 32, 25)
 
 [node name="Actions" type="Node2D" parent="."]
 z_index = 2

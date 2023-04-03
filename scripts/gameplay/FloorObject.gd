@@ -61,12 +61,12 @@ func update_actions():
 func realign():
 	if line == null: return
 	$Actions.rotation_degrees = -angle
-	$Line.visible = true
 	$Midspin.visible = false
+	line.visible = true
 	if midspin:
 		move_to_front()
 		if midspin_object == null:
-			$Line.visible = false
+			line.visible = false
 			$Midspin.visible = true
 	line.set_point_position(2,Vector2(
 		cos(deg_to_rad(angle)),
@@ -120,13 +120,14 @@ func hit(player:Player):
 	elif abs_difference <= 60:
 		print("Poor")
 	if abs_difference > 60: return
-	passed = true
 	if midspin:
 		next_floor = midspin_object
 	next_floor.run_actions(player)
+	passed = true
 	player.advance(next_floor,difference,!midspin)
 
 func run_actions(player:Player):
+	$Light.visible = true
 	var all_actions:Array[Action] = []
 	all_actions.append_array(actions)
 	for object in midspins:
