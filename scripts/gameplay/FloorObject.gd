@@ -1,6 +1,8 @@
 extends Node2D
 class_name FloorObject
 
+const SEPARATION = 4
+
 var floor:Floor:
 	set(value):
 		floor = value
@@ -83,14 +85,14 @@ func realign():
 			if midspin_object == null: position = Vector2(
 				cos(deg_to_rad(last_angle)),
 				-sin(deg_to_rad(last_angle))
-				)*(length + aligned_to.length)
+				)*(length + aligned_to.length + SEPARATION)
 			else: position = Vector2()
 			z_index = 1
 		else:
 			position = aligned_to.position + Vector2(
 				cos(deg_to_rad(last_angle)),
 				-sin(deg_to_rad(last_angle))
-				)*(length + aligned_to.length)
+				)*(length + aligned_to.length + SEPARATION)
 
 func align_to_floor(object:FloorObject):
 	aligned_to = object
