@@ -29,8 +29,9 @@ func _process(delta:float):
 	if clockwise: angle -= addition
 	else: angle += addition
 	spin_angle += addition
-#	if game.playing and spin_angle > 360:
-#		game.stop(true)
+	if game.playing and spin_angle > 270:
+		print("Too slow!")
+		game.stop(true)
 	angle = wrapf(angle,-180,180)
 	anchor = $A
 	spinner = $B
@@ -38,7 +39,7 @@ func _process(delta:float):
 		anchor = $B
 		spinner = $A
 	movement()
-	camera.position = global_position
+#	camera.position = global_position
 
 func _input(event):
 	if !game.playing: return
@@ -58,9 +59,12 @@ func flip():
 func advance(next_floor:FloorObject,offset:float,_flip:bool=true):
 	var difference = current_floor.angle-next_floor.angle
 	var wrapped_difference = wrapf(difference,-180,180)
+	if clockwise: wrapped_difference = -wrapped_difference
 	spin_angle = wrapped_difference + offset
+	print(spin_angle)
 	if _flip:
 		position = next_floor.position
+		game.set_path_offset()
 		flip()
 	current_floor = next_floor
 func hit():
