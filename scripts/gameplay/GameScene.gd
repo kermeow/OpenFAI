@@ -11,7 +11,15 @@ func _ready():
 func map_selected(path:String):
 	map = MapReader.read_from_file(path)
 	setup()
+	call_deferred("generate_path")
 	call_deferred("countdown")
+
+func generate_path():
+	var curve = Curve2D.new()
+	$Path.curve = curve
+	for object in $Floors.get_children():
+		if object.midspin: continue
+		curve.add_point(object.position)
 
 func setup():
 	get_tree().paused = true
@@ -26,7 +34,9 @@ func setup():
 		object.actions = []
 
 		object.floor = floor
-		if align_object: object.align_to_floor(align_object)
+		var floor_position = Vector2()
+		if align_object:
+			floor_position = object.align_to_floor(align_object)
 		if !floor.midspin and !floor.no_align: align_object = object
 
 		if last_object != null:
@@ -65,7 +75,14 @@ func countdown():
 	$Player.angle = 0
 	count = -2
 
+func set_path_offset():
+	var offset = ($Path.curve as Curve2D).get_closest_offset($Player.position)
+	$Path/Follow.progress = offset
 func _process(delta:float):
+	if playing:
+		var bpm_speed = ($Player.bpm/60) * $Player.speed
+		$Camera.position_smoothing_speed = bpm_speed / 1.5
+		$Path/Follow.progress = $Path/Follow.progress + (bpm_speed * 100 * delta)
 	if counting:
 		var bpm_speed = ($Player.bpm/60) * $Player.speed
 		var offset = map.settings.get("offset",0)/1000.0
@@ -83,7 +100,7 @@ func start(from:float=0):
 	if stopped or playing: return
 	print("Started")
 	$Player.angle = from * 180
-	$Player.spin_angle = from * 180
+	$Player.spin_angle = (from * 180) - 60
 	playing = true
 func stop(fail:bool=false):
 	if stopped or !playing: return
@@ -91,4 +108,3 @@ func stop(fail:bool=false):
 	playing = false
 	stopped = true
 	$Music.stop()
-	get_tree().paused = true

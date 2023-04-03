@@ -51,5 +51,4 @@ version_control/autoload_on_startup=true
 
 [rendering]
 
-driver/threads/thread_model=2
 environment/defaults/default_clear_color=Color(0, 0.027451, 0.0784314, 1)
