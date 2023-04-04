@@ -1,4 +1,4 @@
 # Godot 4+ specific ignores
 .godot/
 build/
-map_path.txt
+export_presets.cfg
