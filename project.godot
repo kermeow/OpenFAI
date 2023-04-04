@@ -33,6 +33,8 @@ file_logging/max_log_files=8
 
 window/size/viewport_width=800
 window/size/viewport_height=600
+window/size/window_width_override=1600
+window/size/window_height_override=900
 
 [editor]
 

@@ -14,10 +14,6 @@ signal on_advance
 
 var current_floor:FloorObject
 
-var angle:float = 0
-var side:bool = false
-var clockwise:bool = true
-
 var bpm:float = 60
 var speed:float = 1
 var seconds_per_beat:float:
@@ -26,17 +22,15 @@ var seconds_per_beat:float:
 var anchor:Node2D
 var spinner:Node2D
 
-var spins = 0
-var spin_angle = 0
+var snap_angle:float = 0
+var angle:float = 0
+var side:bool = false
+var clockwise:bool = true
 
 func _process(delta:float):
 	var addition = delta * 180 * (bpm/60) * speed
 	if clockwise: angle -= addition
 	else: angle += addition
-	spin_angle += addition
-#	if game.playing and spin_angle > 270:
-#		print("Too slow!")
-#		game.stop(true)
 	angle = wrapf(angle,-180,180)
 	anchor = $A
 	spinner = $B
@@ -60,12 +54,8 @@ func movement():
 func flip():
 	side = not side
 	angle = wrapf(angle-180,-180,180)
-func advance(next_floor:FloorObject,offset:float,_flip:bool=true):
-	var difference = current_floor.angle-next_floor.angle
-	var wrapped_difference = wrapf(difference,0,180)
-	if !clockwise: wrapped_difference = -wrapped_difference
-	spin_angle = wrapped_difference
-	print(spin_angle)
+func advance(next_floor:FloorObject,_flip:bool=true,_snap_angle:float=0):
+	snap_angle = _snap_angle
 	if _flip:
 		position = next_floor.position
 		game.set_path_offset()

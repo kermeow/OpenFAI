@@ -63,6 +63,7 @@ func setup():
 			object.midspins = midspins.duplicate()
 			midspins.reverse()
 			for midspin in midspins:
+				midspin.midspin_parent = object
 				object.add_child(midspin)
 			midspins = []
 			$Floors.add_child(object)
@@ -88,8 +89,6 @@ func setup():
 			print("Out of bounds action")
 
 	$Player.bpm = map.settings.get("bpm",60)
-	$Player.current_floor = $Floors.get_child(0)
-	$Player.current_floor.run_actions($Player)
 	get_tree().paused = false
 
 var counting = false
@@ -103,7 +102,9 @@ func countdown():
 	count = -2
 
 func set_path_offset():
-	var offset = ($Path.curve as Curve2D).get_closest_offset($Player.position)
+	var curve = $Path.curve as Curve2D
+	var offset = 0
+	if curve != null: offset = curve.get_closest_offset($Player.position)
 	$Path/Follow.progress = offset
 func _process(delta:float):
 	if playing:
@@ -126,12 +127,12 @@ var stopped:bool = false
 func start(from:float=0):
 	if stopped or playing: return
 	print("Started")
-	$Player.angle = from * 180
-	$Player.spin_angle = (from * 180) - 60
+	$Player.current_floor = $Floors.get_child(0)
 	playing = true
 func stop(fail:bool=false):
 	if stopped or !playing: return
 	print("Stopped")
+	print("Failed: %s" % fail)
 	playing = false
 	stopped = true
 	$Music.stop()

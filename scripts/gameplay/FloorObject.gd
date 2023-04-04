@@ -1,7 +1,7 @@
 extends Node2D
 class_name FloorObject
 
-const SEPARATION = 4
+const SEPARATION = 2
 
 var floor:Floor:
 	set(value):
@@ -25,6 +25,7 @@ var midspin:bool:
 	get: return floor.midspin
 var midspin_object:FloorObject
 var midspins:Array[FloorObject] = []
+var midspin_parent:FloorObject
 
 var aligned_to:FloorObject
 var next_floor:FloorObject
@@ -73,61 +74,78 @@ func realign():
 	line.set_point_position(2,Vector2(
 		cos(deg_to_rad(angle)),
 		-sin(deg_to_rad(angle))
-		)*length)
+		)*(length-SEPARATION))
 	if aligned_to != null:
 		$Midspin.rotation_degrees = -angle
 		var last_angle = aligned_to.angle
 		line.set_point_position(0,Vector2(
 			cos(deg_to_rad(last_angle)),
 			-sin(deg_to_rad(last_angle))
-			)*-length)
+			)*-(length-SEPARATION))
 		if midspin:
 			if midspin_object == null: position = Vector2(
 				cos(deg_to_rad(last_angle)),
 				-sin(deg_to_rad(last_angle))
-				)*(length + aligned_to.length + SEPARATION)
+				)*(length + aligned_to.length)
 			else: position = Vector2()
 			z_index = 1
 		else:
 			position = aligned_to.position + Vector2(
 				cos(deg_to_rad(last_angle)),
 				-sin(deg_to_rad(last_angle))
-				)*(length + aligned_to.length + SEPARATION)
-
+				)*(length + aligned_to.length)
 func align_to_floor(object:FloorObject):
 	aligned_to = object
 	realign()
+
 func hit(player:Player):
 	if passed: return
 	if next_floor == null and !midspin: return
+
 	for object in midspins:
 		if !object.passed:
-			print("Midspin needed")
 			object.hit(player)
 			return
-	var spinner_position = player.spinner.position
+
+	var spinner_position = player.spinner.global_position - player.position
 	var next_position:Vector2
 	if midspin:
 		next_position = Vector2(
 			cos(deg_to_rad(angle)),
 			-sin(deg_to_rad(angle))
 			)*length
-	else: next_position = next_floor.position-position
+	else:
+		next_position = next_floor.position-position
+
 	var difference = rad_to_deg(spinner_position.angle_to(next_position))
 	var abs_difference = abs(difference)
-	if abs_difference <= 30:
-		print("Perfect")
-	elif abs_difference <= 45:
-		print("Good")
-	elif abs_difference <= 60:
-		print("Poor")
-	if abs_difference > 60: return
+#	if abs_difference <= 30:
+#		print("Perfect")
+#	elif abs_difference <= 45:
+#		print("Good")
+#	elif abs_difference <= 60:
+#		print("Poor")
+	if abs_difference > 60:
+		return
+
 	if midspin:
 		midspin_object.hide_animated(player)
 		next_floor = midspin_object
 	next_floor.run_actions(player)
 	passed = true
-	player.advance(next_floor,difference,!midspin)
+
+	if midspin:
+		var midspin_index = midspin_parent.midspins.find(self)
+		var next:FloorObject = midspin_parent.next_floor
+		if midspin_index+1 < midspin_parent.midspins.size():
+			next = midspin_parent.midspins[midspin_index+1]
+		player.advance(next,false,player.rotation_degrees)
+	else:
+		var next = next_floor
+		if next_floor.midspins.size() > 0:
+			next = next_floor.midspins[0]
+		player.advance(next_floor,true,player.rotation_degrees-180)
+	return
 
 func run_actions(player:Player):
 	$Light.visible = true

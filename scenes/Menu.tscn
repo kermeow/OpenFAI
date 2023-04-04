@@ -19,5 +19,4 @@ visible = true
 ok_button_text = "Open"
 mode_overrides_title = false
 file_mode = 0
-access = 1
-root_subfolder = "maps"
+access = 2
