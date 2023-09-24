@@ -49,11 +49,11 @@ remote_path = NodePath("../../../Camera")
 update_rotation = false
 update_scale = false
 
-[node name="Floors" type="CanvasGroup" parent="."]
+[node name="Tiles" type="CanvasGroup" parent="."]
 
 [node name="Player" parent="." instance=ExtResource("3_yy24x")]
 camera_path = NodePath("../Camera")
 music_path = NodePath("../Music")
-floor_container_path = NodePath("../Floors")
+floor_container_path = NodePath("../Tiles")
 
 [node name="Music" type="AudioStreamPlayer" parent="."]

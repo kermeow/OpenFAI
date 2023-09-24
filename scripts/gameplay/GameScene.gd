@@ -31,7 +31,7 @@ func player_advanced(to:FloorObject):
 func generate_path():
 	var curve = Curve2D.new()
 	$Path.curve = curve
-	for object in $Floors.get_children():
+	for object in $Tiles.get_children():
 		if object.midspin: continue
 		curve.add_point(object.position)
 
@@ -66,7 +66,7 @@ func setup():
 				midspin.midspin_parent = object
 				object.add_child(midspin)
 			midspins = []
-			$Floors.add_child(object)
+			$Tiles.add_child(object)
 			objects_noms.append(object)
 			object_count += 1
 			last_object_noms = object
@@ -127,7 +127,7 @@ var stopped:bool = false
 func start(from:float=0):
 	if stopped or playing: return
 	print("Started")
-	$Player.current_floor = $Floors.get_child(0)
+	$Player.current_floor = $Tiles.get_child(0)
 	playing = true
 func stop(fail:bool=false):
 	if stopped or !playing: return
